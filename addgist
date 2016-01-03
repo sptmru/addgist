@@ -1,13 +1,34 @@
 #!/usr/bin/env python
 
 import sys, os
+from pygithub3 import Github
 
-def add_gist(filename):
-	return
+#API credentials
+github_user = "username"
+github_password = "password"
+is_public = True
 
-if(len(sys.argv) == 2):
-	add_gist(sys.argv[1])
+github = Github(login=github_user, password=github_password)
+
+def add_gist(filepath, description):
+	if os.path.isfile(filepath) and description.isalpha() and len(description) > 0:
+
+		fp = open(filepath, "r")
+		content = fp.read()
+		fp.close()
+
+		filename = os.path.basename(filepath)
+
+		print(description)
+		print(filename)
+		print(content)
+		github.gists.create(dict(description=description, public=is_public, files={filename: {'content': content}}))
+	else:
+		print("Please check if " + filepath + " exists!")
+
+if(len(sys.argv) == 3):
+	add_gist(sys.argv[1], sys.argv[2])
 else:
 	print("Usage:\n")
-	print("addgist gistfile.py\n")
+	print("addgist gistfile.py 'Gist description'\n")
 	print("Please also note that you need to set up GitHub credentials in the script")
