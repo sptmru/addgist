@@ -14,6 +14,7 @@ Please note that you need to add your GitHub credentials in the script.
 ### Usage
 ```sh
 $ addgist ~/myfile.py "Gist description"
+$ addgist ~/mysecretfile.py "Gist description" secret
 ```
 
 ### Contacts

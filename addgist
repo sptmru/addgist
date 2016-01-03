@@ -6,11 +6,10 @@ from pygithub3 import Github
 #API credentials
 github_user = "username"
 github_password = "password"
-is_public = True
 
 github = Github(login=github_user, password=github_password)
 
-def add_gist(filepath, description):
+def add_gist(filepath, description, is_public):
 	if os.path.isfile(filepath) and len(description) > 0:
 
 		fp = open(filepath, "r")
@@ -22,13 +21,19 @@ def add_gist(filepath, description):
 			github.gists.create(dict(description=description, public=is_public, files={filename: {'content': content}}))
 		else:
 			print("File should not be empty!")
-		
+
 	else:
 		print("Please check if " + filepath + " exists!")
 
-if(len(sys.argv) == 3):
-	add_gist(sys.argv[1], sys.argv[2])
+if len(sys.argv) == 3:
+	add_gist(sys.argv[1], sys.argv[2], True)
+elif len(sys.argv) == 4 and sys.argv[3] == 'secret':
+	add_gist(sys.argv[1], sys.argv[2], False)
 else:
 	print("Usage:\n")
-	print("addgist gistfile.py 'gist description'\n")
+	print("$ addgist gistfile.py 'gist description'")
+	print("(for public gist) or")
+	print("$ addgist gistfile.py 'gist description' secret")
+	print("(for secret gist).\n")
+
 	print("Please also note that you need to set up GitHub credentials in the script")
