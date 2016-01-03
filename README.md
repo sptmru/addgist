@@ -1,4 +1,4 @@
-# sopcast-script
+# addgist
 
 ### Description
 Python console tool for adding gists to [Github Gist](https://gist.github.com/).
